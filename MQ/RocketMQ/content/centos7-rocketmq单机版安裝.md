@@ -78,6 +78,12 @@ transientStorePoolEnable=false
 >firewall-cmd --zone=public --add-port=8080/tcp --permanent
 >firewall-cmd --zone=public --add-port=10909/tcp --permanent
 >firewall-cmd --reload
+>systemctl stop firewalld.service 
+```
+## 关闭mq
+```
+sh mqshutdown broker
+sh mqshutdown namesrv
 ```
 ## 引入依赖
 > 引入的依赖和安装的rocketmq版本直接有着非常大的版本关联关系，由于使用的是4.2.0的rocketmq，所以客户端使用了4.1.0
