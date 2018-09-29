@@ -238,9 +238,41 @@ public class Consumer {
 ## 安装控制台
 ```
 >git clone https://github.com/apache/rocketmq-externals 
+```
+## 修改配置
+
+```
+>cd /home/soft/rocketmq-externals/rocketmq-console
+>vim src/main/resources/appplication.properties 
+```
+namesrvAddr需要修改
+```
+server.contextPath=
+server.port=8080
+#spring.application.index=true
+spring.application.name=rocketmq-console
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+logging.config=classpath:logback.xml
+#if this value is empty,use env value rocketmq.config.namesrvAddr  NAMESRV_ADDR | now, you can set it in ops page.default localhost:9876
+rocketmq.config.namesrvAddr=192.168.194.199:9876
+#if you use rocketmq version < 3.5.8, rocketmq.config.isVIPChannel should be false.default true
+rocketmq.config.isVIPChannel=
+#rocketmq-console's data path:dashboard/monitor
+rocketmq.config.dataPath=/tmp/rocketmq-console/data
+#set it false if you don't want use dashboard.default true
+rocketmq.config.enableDashBoardCollect=true
+
+```
+
+## 编译
+
+```
 >cd rocketmq-externals/rocketmq-console/
 >mvn clean package -Dmaven.test.skip=true
 ```
+
 ## 启动控制台
 ```
 >cd rocketmq-externals-master/rocketmq-console/target
