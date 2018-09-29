@@ -73,7 +73,7 @@ transientStorePoolEnable=false
 ![](2018-09-27-21-52-50.png)
 
 #使用springboot整合rocketmq
-## 关闭防火墙，开放端口9876和10909
+## 关闭防火墙or开放端口9876和10909(一般关闭防火墙就可以啦)
 ```
 >firewall-cmd --zone=public --add-port=8080/tcp --permanent
 >firewall-cmd --zone=public --add-port=10909/tcp --permanent
