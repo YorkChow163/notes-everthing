@@ -80,11 +80,6 @@ transientStorePoolEnable=false
 >firewall-cmd --reload
 >systemctl stop firewalld.service 
 ```
-## 关闭mq
-```
-sh mqshutdown broker
-sh mqshutdown namesrv
-```
 ## 引入依赖
 > 引入的依赖和安装的rocketmq版本直接有着非常大的版本关联关系，由于使用的是4.2.0的rocketmq，所以客户端使用了4.1.0
 ```
@@ -234,6 +229,33 @@ public class Consumer {
     }
 ```
 > 测试结果
-# 下载安装rocketmq控制台
+
+发：
+![](screenshot/2018-09-29-10-50-45.png)
+收：
+![](screenshot/2018-09-29-10-51-41.png)
+# 整合rocketmq控制台来监控mq队列
+## 安装控制台
+```
+>git clone https://github.com/apache/rocketmq-externals 
+>cd rocketmq-externals/rocketmq-console/
+>mvn clean package -Dmaven.test.skip=true
+```
+## 启动控制台
+```
+>cd rocketmq-externals-master/rocketmq-console/target
+>nohup java -jar rocketmq-console-ng-1.0.0.jar >>/home/soft/rocketmqlogs/consolelog.log 2>&1 &
+```
+## 运行springbotdemo，查看刚刚发送的消息
+![](screenshot/2018-09-29-12-05-01.png)
+# mq相关命令
+>关闭
+```
+sh mqshutdown broker
+sh mqshutdown namesrv
+```
+## 优化
+* 每次都需要启动mq，
+
 
 
