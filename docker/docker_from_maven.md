@@ -76,7 +76,7 @@
                 <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
                 <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
 				<!-- 镜像名 -->
-                <imageName>docker-spring-boot-demo-maven-plugin</imageName>
+                <imageName>${docker.image.prefix}-${project.artifactId}:${project.version}</imageName>
                 <!-- 指定Dockerfile所在的路径 -->
                 <dockerDirectory>${basedir}/src/main/resources</dockerDirectory>
                 <resources>
