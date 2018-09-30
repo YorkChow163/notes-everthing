@@ -35,10 +35,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 
-		<!--set this to your docker acct name-->
+		<!--设置镜像前缀名-->
 		<docker.image.prefix>springframeworkguru</docker.image.prefix>
 
-		<!--Set to name of project-->
+		<!--设置镜像名-->
 		<docker.image.name>springbootdocker</docker.image.name>
 
 	</properties>
@@ -65,77 +65,35 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.20.0</version>
-
-				<configuration>
-
-                    <!--<dockerHost>http://127.0.0.1:2375</dockerHost>-->
-                    <dockerHost>unix:///var/run/docker.sock</dockerHost>
-
-                    <verbose>true</verbose>
-					<images>
-						<image>
-							<name>${docker.image.prefix}/${docker.image.name}</name>
-							<build>
-								<dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
-
-                                <!--copies artficact to docker build dir in target-->
-								<assembly>
-									<descriptorRef>artifact</descriptorRef>
-								</assembly>
-								<tags>
-									<tag>latest</tag>
-									<tag>${project.version}</tag>
-								</tags>
-							</build>
-							<run>
-								<ports>
-									<port>8080:8080</port>
-								</ports>
-							</run>
-						</image>
-					</images>
-				</configuration>
-			</plugin>
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <scripts>
-                        <script>file:///${project.basedir}/src/main/scripts/BuildDockerfile.groovy</script>
-                    </scripts>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-all</artifactId>
-                        <!-- any version of Groovy \>= 1.5.0 should work here -->
-                        <version>2.4.8</version>
-                        <scope>runtime</scope>
-                    </dependency>
-                </dependencies>
-            </plugin>
-		</plugins>
-	</build>
+    <plugins>
+        <!-- docker的maven插件，官网：https://github.com/spotify/docker-maven-plugin -->
+        <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>1.1.1</version>
+            <configuration>
+                <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
+                <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
+				<!-- 镜像名 -->
+                <imageName>docker-spring-boot-demo-maven-plugin</imageName>
+                <!-- 指定Dockerfile所在的路径 -->
+                <dockerDirectory>${basedir}/src/main/resources</dockerDirectory>
+                <resources>
+				    <!--指定jar包所在的路径，docker maven插件会把dockerfile复制到jar包坐在路径进行解析构建镜像 -->
+                    <resource>
+				     	<!--项目根目录-->
+                        <targetPath>/</targetPath>
+                        <!--默认是target-->
+                        <directory>${project.build.directory}</directory>
+                        <!--默认是${project.artifactId}-${project.version}-->
+                        <include>${project.build.finalName}.jar</include>
+                    </resource>
+                </resources>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 </project>
 ```
