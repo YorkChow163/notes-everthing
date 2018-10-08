@@ -3,7 +3,7 @@
   * [单机版安装](./content/centos7-rocketmq单机版安裝.md)
   * [docker安装](./content/docker-rocketmq安裝.md)
 * 基本原理
-  * [事务消息原理]](./content/RMQ事务消息原理.md)
+  * [事务消息原理](./content/RMQ事务消息原理.md)
 * 集群模式
 * 发送模式
 * 消息类型
