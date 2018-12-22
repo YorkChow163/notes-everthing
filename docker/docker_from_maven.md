@@ -86,7 +86,7 @@
                         <targetPath>/</targetPath>
                         <!--默认是target-->
                         <directory>${project.build.directory}</directory>
-                        <!--默认是${project.artifactId}-${project.version}-->
+                        <!--默认是${project.artifactId}-${project.version}，这就要求我们打包的时候必须是指定打包的jar包名字是这个，不然会找不到-->
                         <include>${project.build.finalName}.jar</include>
                     </resource>
                 </resources>
