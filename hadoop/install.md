@@ -1,0 +1,1 @@
+- [集群安装](https://www.cnblogs.com/frankdeng/p/9047698.html)
